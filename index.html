@@ -82,14 +82,15 @@
     <form>
       <input type="text" id="new-todo" placeholder="What needs to be done?">
     </form>
+    <form onsubmit="submitTodo(); return false"></form>
 
     <ul id="todolist">
       <li class="todo">
-        <input id="todo-1" type="checkbox">
+        <input id="todo-1" type="checkbox" onchange="toggleDone.bind(this)();">
         <label for="todo-1">Sweep the floor</label>
       </li>
       <li class="todo completed">
-        <input id="todo-2" type="checkbox" checked>
+        <input id="todo-2" type="checkbox" checked="checked" onchange="toggleDone.bind(this)();">
         <label for="todo-2">Dust the vases</label>
       </li>
     </ul>
@@ -128,7 +129,7 @@
   var uncompletedTodos = totalTodos - completedTodos;
   todoCount.innerHTML = uncompletedTodos;
 }
-updateCounters();
+
 function toggleDone() {
   var checkbox = this;
 
@@ -139,6 +140,17 @@ function toggleDone() {
   } else {
     checkbox.parentElement.className = "todo";
   }
+
+  
+}
+function submitTodo() {
+  var inputField = document.getElementById("new-todo");
+  var newTodoTitle = inputField.value;
+  createTodo(newTodoTitle);
+
+  // reset the value of the inputField to make it empty and
+  // ready to create new todos
+  inputField.value = null;
 
   updateCounters();
 }
